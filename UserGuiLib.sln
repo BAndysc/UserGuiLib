@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObservableObjects", "Observ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserGuiLib.GDI", "UserGuiLib.GDI\UserGuiLib.GDI.csproj", "{76F92864-22F7-429A-9917-3D7DFA6E7956}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserGuiLib.Components", "UserGuiLib.Components\UserGuiLib.Components.csproj", "{EE3AC5C2-005C-4CBD-8F8B-07BD0AD7BF67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{76F92864-22F7-429A-9917-3D7DFA6E7956}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76F92864-22F7-429A-9917-3D7DFA6E7956}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76F92864-22F7-429A-9917-3D7DFA6E7956}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE3AC5C2-005C-4CBD-8F8B-07BD0AD7BF67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE3AC5C2-005C-4CBD-8F8B-07BD0AD7BF67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE3AC5C2-005C-4CBD-8F8B-07BD0AD7BF67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE3AC5C2-005C-4CBD-8F8B-07BD0AD7BF67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
