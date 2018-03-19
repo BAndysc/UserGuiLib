@@ -202,6 +202,8 @@ namespace UserGuiLib.Common.Control
                     ZoomVelocity = -4;
                 }
             }
+
+            root.GetService<IMouseWheel>().MouseWheel(Delta);
         }
 
         public void Update()

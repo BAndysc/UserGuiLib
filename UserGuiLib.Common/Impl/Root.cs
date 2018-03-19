@@ -7,7 +7,9 @@ namespace UserGuiLib.Common.Impl
     {
         public Root()
         {
-            RegisterService<IMouseEvents>(new MouseHandler());
+            var mouseHandler = new MouseHandler();
+            RegisterService<IMouseEvents>(mouseHandler);
+            RegisterService<IMouseWheel>(mouseHandler);
             RegisterService<ILayout>(new PassDownChildrenLayout());
         }
     }

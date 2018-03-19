@@ -4,11 +4,12 @@ using UserGuiLib.Common.Component;
 
 namespace UserGuiLib.Common.Services.MouseEvents
 {
-    public class MouseHandler : IMouseEvents
+    public class MouseHandler : IMouseEvents, IMouseWheel
     {
         public event Action<MouseButtons, Vector2> OnMouseMove = delegate { };
         public event Action<MouseButtons, Vector2> OnMouseDown = delegate { };
         public event Action<MouseButtons, Vector2> OnMouseUp = delegate { };
+        public event Action<float> OnMouseWheel = delegate { };
         public event Action OnMouseEnter = delegate { };
         public event Action OnMouseExit = delegate { };
 
@@ -16,12 +17,16 @@ namespace UserGuiLib.Common.Services.MouseEvents
 
         private ITransform current;
         private IMouseEvents currentOver;
-        
+
+        private ITransform down;
+
         public bool IsLeftDown { get; private set; }
         public bool IsOver { get; private set; }
 
         private ITransform RayCast(Vector2 mouse)
         {
+            if (down != null)
+                return down;
             var list = Owner.Transform.ChildrenInRegion(mouse, mouse+Vector2.Zero);
             foreach (var el in list)
                 return el.Transform;
@@ -89,12 +94,14 @@ namespace UserGuiLib.Common.Services.MouseEvents
 
             if (raycast != null)
             {
+                down = raycast;
                 var service = raycast.Object.GetService<IMouseEvents>();
                 if (service != null)
                     service.MouseDown(buttons, cursor - raycast.Location);
             }
             else
             {
+                down = null;
                 OnMouseDown(buttons, cursor);
                 if (buttons.HasFlag(MouseButtons.Left))
                     IsLeftDown = true;
@@ -117,6 +124,17 @@ namespace UserGuiLib.Common.Services.MouseEvents
                 OnMouseUp(buttons, cursor);
                 if (buttons.HasFlag(MouseButtons.Left))
                     IsLeftDown = false;
+            }
+            down = null;
+        }
+
+        public void MouseWheel(float delta)
+        {
+            if (current != null)
+            {
+                var wheel = current.Object.GetService<IMouseWheel>();
+                if (wheel != null)
+                    wheel.MouseWheel(delta);
             }
         }
     }

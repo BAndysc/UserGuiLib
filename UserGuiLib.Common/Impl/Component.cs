@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UserGuiLib.Common.Component;
+using UserGuiLib.Common.Drawing;
 using UserGuiLib.Common.Services;
 
 namespace UserGuiLib.Common.Impl
@@ -29,5 +30,8 @@ namespace UserGuiLib.Common.Impl
             services[typeof(T)] = service;
             return service;
         }
+
+        public static AnyFont DefaultFont = new AnyFont("MS Sans Serif", 10);
+        public static AnyPen DefaultPen = new AnyPen(255, 0, 0, 0, 1);
     }
 }

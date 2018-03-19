@@ -63,6 +63,7 @@
     <Compile Include="Services\Layout\PassDownChildrenLayout.cs" />
     <Compile Include="Services\Layout\VerticalGroupLayout.cs" />
     <Compile Include="Services\MouseEvents\IMouseEvents.cs" />
+    <Compile Include="Services\MouseEvents\IMouseWheel.cs" />
     <Compile Include="Services\MouseEvents\MouseHandler.cs" />
     <Compile Include="Services\Render\IPixelShader.cs" />
     <Compile Include="Services\Render\IRenderer.cs" />
