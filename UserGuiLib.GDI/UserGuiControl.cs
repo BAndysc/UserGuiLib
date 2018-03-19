@@ -123,6 +123,9 @@ namespace UserGuiLib.GDI
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (e.ClipRectangle.IsEmpty)
+                return;
+
             graphics.Graphics.ResetTransform();
             surface.Clear();
 
