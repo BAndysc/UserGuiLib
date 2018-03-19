@@ -107,7 +107,13 @@ namespace UserGuiLib.GDI
             float x = point.x - anchor.x * measure.x;
             float y = point.y - anchor.y * measure.y;
 
-            Graphics.DrawString(text, GetFont(font), GetPen(pen).Brush, x * scalingFactor, y * scalingFactor);
+            if (maxWidth == 0)
+                Graphics.DrawString(text, GetFont(font), GetPen(pen).Brush, x * scalingFactor, y * scalingFactor);
+            else
+            {
+                var layout = new System.Drawing.RectangleF(x * scalingFactor, y * scalingFactor, maxWidth, 10000);
+                Graphics.DrawString(text, GetFont(font), GetPen(pen).Brush, layout);
+            }
         }
 
         public void FillRectangle(AnyPen pen, Vector2 p1, Vector2 p2, float radius = 0)
