@@ -35,7 +35,7 @@ namespace UserGuiLib.ExampleCommon.TreeExample
             };
 
             addRandomNode.Transform.Size = new Common.Algebra.Vector2(220, 40);
-            addRandomNode.OnClick += () => tree.Insert(random.Next(-50, 50));
+            addRandomNode.OnClick += () => tree.Insert(random.Next(-20, 20));
 
             binaryTreeView.OnNodeClick += (node) =>
             {

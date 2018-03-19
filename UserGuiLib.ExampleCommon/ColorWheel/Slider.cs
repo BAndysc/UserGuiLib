@@ -8,7 +8,7 @@ using UserGuiLib.Common.Services.Render;
 
 namespace UserGuiLib.ExampleCommon.ColorWheel
 {
-    public class Slider : Component, IRenderer, IMouseEvents, IMouseWheel
+    public class Slider : Component, IRenderer, IMouseEvents, IMouseWheel, IPixelShader
     {
         private Rect slider;
 
@@ -19,19 +19,19 @@ namespace UserGuiLib.ExampleCommon.ColorWheel
             RegisterService<IRenderer>(this);
             RegisterService<IMouseEvents>(this);
             RegisterService<IMouseWheel>(this);
+            RegisterService<IPixelShader>(this);
 
             Value = new ObservableProperty<float>(0, (v) => v.Clamp(0, 1));
         }
 
         public void Render(IGraphics graphics)
         {
-            graphics.DrawLine(new AnyPen(255, 0, 0, 0, 2), new Vector2(Transform.Size.x / 2, 0), new Vector2(Transform.Size.x / 2, Transform.Size.y));
-
-            var p1 = new Vector2(0, System.Math.Min(Value.get() * Transform.Size.y, Transform.Size.y - 10));
+            var p1 = new Vector2(Transform.Size.x/2, System.Math.Min(Value.get() * Transform.Size.y + 6, Transform.Size.y - 10));
 
             slider = new Rect(p1, new Vector2(Transform.Size.x, 10));
 
-            graphics.FillRectangle(new AnyPen(255, 0, 0, 0, 1), p1, p1 + new Vector2(Transform.Size.x, 10));
+            graphics.DrawCircle(new AnyPen(255, 255, 255, 255, 1), p1, Vector2.Half, 5);
+            graphics.DrawCircle(new AnyPen(255, 0,0,0, 1), p1, Vector2.Half, 6);
         }
 
         private bool down = false;
@@ -81,6 +81,11 @@ namespace UserGuiLib.ExampleCommon.ColorWheel
             {
                 Value.set(Value.get() + 0.1f);
             }
+        }
+
+        public int PixelShader(uint screenX, uint screenY, float x, float y)
+        {
+            return ColorScale.HsvToRgb(y / Transform.Size.y * 360, 1, 1);
         }
     }
 }

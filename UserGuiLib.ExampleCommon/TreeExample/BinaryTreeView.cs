@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UserGuiLib.Common.Algebra;
-using UserGuiLib.Common.Component;
 using UserGuiLib.Common.Drawing;
 using UserGuiLib.Common.Impl;
 using UserGuiLib.Common.Services.Layout;

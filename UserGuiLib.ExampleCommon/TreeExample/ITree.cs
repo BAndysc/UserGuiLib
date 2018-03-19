@@ -9,8 +9,8 @@ namespace UserGuiLib.ExampleCommon
 {
     public interface ITreeNode<T> where T : IComparable
     {
-        IObservableProperty<ITreeNode<T>> Left { get; }
-        IObservableProperty<ITreeNode<T>> Right { get; }
+        IObservableValue<ITreeNode<T>> Left { get; }
+        IObservableValue<ITreeNode<T>> Right { get; }
 
         T Value { get; }
 
@@ -19,7 +19,7 @@ namespace UserGuiLib.ExampleCommon
 
     public interface ITree<T> where T : IComparable
     {
-        IObservableProperty<ITreeNode<T>> Root { get; }
+        IObservableValue<ITreeNode<T>> Root { get; }
 
         void Insert(T element);
         bool Contains(T element);

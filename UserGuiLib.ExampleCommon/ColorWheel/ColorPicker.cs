@@ -31,8 +31,8 @@ namespace UserGuiLib.ExampleCommon.ColorWheel
             hueSlider.Transform.Size = new Vector2(20, 0);
             
             colorBox = new ColorBox();
-            
-            hueSlider.Value.OnChange += (oldVal, newVal) => colorBox.Hue = newVal * 360;
+
+            colorBox.Hue.bind(hueSlider.Value);
 
             Transform.AddChild(hueSlider);
             Transform.AddChild(colorBox);

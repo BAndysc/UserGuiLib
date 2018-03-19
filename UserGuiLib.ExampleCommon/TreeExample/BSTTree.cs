@@ -7,8 +7,8 @@ namespace UserGuiLib.ExampleCommon
     {
         public T Value { get; }
         
-        public IObservableProperty<ITreeNode<T>> Left { get; }
-        public IObservableProperty<ITreeNode<T>> Right { get; }
+        public IObservableValue<ITreeNode<T>> Left { get; }
+        public IObservableValue<ITreeNode<T>> Right { get; }
 
         public TreeNode(T value)
         {
@@ -43,7 +43,7 @@ namespace UserGuiLib.ExampleCommon
 
     public class BSTTree<T> : ITree<T> where T : IComparable
     {
-        public IObservableProperty<ITreeNode<T>> Root { get; private set; }
+        public IObservableValue<ITreeNode<T>> Root { get; private set; }
 
         public BSTTree()
         {
