@@ -189,7 +189,7 @@ namespace PaintDotNet.SystemLayer
                 DrawPolyLineImpl(g, color, points);
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
@@ -280,7 +280,7 @@ namespace PaintDotNet.SystemLayer
                 FillRectanglesImpl(g, color, rects);
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }

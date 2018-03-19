@@ -20,8 +20,8 @@ namespace PaintDotNet.SystemLayer
     /// Contains methods for allocating, freeing, and performing operations on memory 
     /// that is fixed (pinned) in memory.
     /// </summary>
-    [CLSCompliant(false)]
-    public unsafe static class Memory
+    //[CLSCompliant(false)]
+    public static unsafe class Memory
     {
         private static IntPtr hHeap;
 
