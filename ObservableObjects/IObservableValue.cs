@@ -2,7 +2,7 @@
 
 namespace ObservableObjects
 {
-    public interface IObservableProperty<T>
+    public interface IObservableValue<T>
     {
         T get();
         void set(T val);

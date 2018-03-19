@@ -41,9 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IObservableList.cs" />
-    <Compile Include="IObservableProperty.cs" />
+    <Compile Include="IObservableValue.cs" />
     <Compile Include="ObservableList.cs" />
     <Compile Include="ObservableProperty.cs" />
+    <Compile Include="ObservableValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

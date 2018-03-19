@@ -2,41 +2,60 @@
 
 namespace ObservableObjects
 {
-    public class ObservableProperty<T> : IObservableProperty<T>
+    public class ObservableProperty<T> : ObservableValue<T>
     {
-        private T value;
-        private Func<T, T> checker = null;
+        private IObservableValue<T> bound;
 
-        public event Action<T, T> OnChange;
-
-        public ObservableProperty(T initial)
+        public ObservableProperty(T initial) : base(initial)
         {
-            value = initial;
         }
 
-        public ObservableProperty(T initial, Func<T, T> checker)
+        public ObservableProperty(T initial, Func<T, T> checker) : base(initial, checker)
         {
-            value = initial;
-            this.checker = checker;
         }
 
-        public ObservableProperty()
+        public ObservableProperty() : base()
         {
-            value = default(T);
         }
 
-        public void set(T value)
+        private bool inListener = false;
+        private bool inThisListener = false;
+
+        public void bind(IObservableValue<T> other)
         {
-            T old = this.value;
-            if (checker != null)
-                value = checker(value);
-            this.value = value;
-            OnChange?.Invoke(old, value);
+            other.OnChange += ObservedChanged;
+            OnChange += ThisChanged;
+            bound = other;
         }
 
-        public T get()
+        public void unbind()
         {
-            return value;
+            if (bound != null)
+            {
+                bound.OnChange -= ObservedChanged;
+                OnChange -= ThisChanged;
+                bound = null;
+            }
+        }
+
+        private void ObservedChanged(T oldVal, T newVal)
+        {
+            if (inThisListener)
+                return;
+
+            inListener = true;
+            set(newVal);
+            inListener = false;
+        }
+
+        private void ThisChanged(T oldVal, T newVal)
+        {
+            if (inListener)
+                return;
+
+            inThisListener = true;
+            bound.set(newVal);
+            inThisListener = false;
         }
     }
 }
