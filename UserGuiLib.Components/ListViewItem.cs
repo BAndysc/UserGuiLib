@@ -17,9 +17,7 @@ namespace UserGuiLib.Components
         private AnyPen hoverBg;
 
         private bool over = false;
-
-        public IComponent Owner { get; set; }
-
+        
         public Vector2 Padding;
 
         public ListViewItem(T obj)

@@ -12,7 +12,6 @@ namespace UserGuiLib.Components
 {
     public class ListView<T> : Component, IRenderer
     {
-        public IComponent Owner { get; set; }
         public ObservableList<T> Items { get; private set; } = new ObservableList<T>();
 
         private Dictionary<T, ListViewItem<T>> keyToView = new Dictionary<T, ListViewItem<T>>();

@@ -10,8 +10,6 @@ namespace UserGuiLib.Components
 {
     public class Button : Component, IRenderer, ILayout
     {
-        public IComponent Owner { get; set; }
-
         public string Text { get; set; }
 
         public event System.Action OnClick = delegate { };

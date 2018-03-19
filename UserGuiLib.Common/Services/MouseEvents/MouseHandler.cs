@@ -23,10 +23,16 @@ namespace UserGuiLib.Common.Services.MouseEvents
         public bool IsLeftDown { get; private set; }
         public bool IsOver { get; private set; }
 
+        private bool blocked;
+
         private ITransform RayCast(Vector2 mouse)
         {
+            if (blocked)
+                return null;
+
             if (down != null)
                 return down;
+
             var list = Owner.Transform.ChildrenInRegion(mouse, mouse+Vector2.Zero);
             foreach (var el in list)
                 return el.Transform;
@@ -136,6 +142,22 @@ namespace UserGuiLib.Common.Services.MouseEvents
                 if (wheel != null)
                     wheel.MouseWheel(delta);
             }
+        }
+
+        public void Block(bool block)
+        {
+            if (block)
+            {
+                if (down != null)
+                {
+                    MouseUp(MouseButtons.Left, Vector2.Zero);
+                }
+                if (current != null)
+                {
+                    MouseExit();
+                }
+            }
+            blocked = block;
         }
     }
 }

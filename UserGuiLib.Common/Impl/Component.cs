@@ -6,9 +6,10 @@ using UserGuiLib.Common.Services;
 
 namespace UserGuiLib.Common.Impl
 {
-    public class Component : IComponent
+    public class Component : IComponent, IService
     {
         public ITransform Transform { get; private set; }
+        public IComponent Owner { get; set; }
 
         public Component()
         {

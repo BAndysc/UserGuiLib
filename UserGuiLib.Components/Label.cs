@@ -9,8 +9,6 @@ namespace UserGuiLib.Components
 {
     public class Label : Component, IRenderer, ILayout
     {
-        public IComponent Owner { get; set; }
-
         public string Text;
 
         public Vector2 Padding;
