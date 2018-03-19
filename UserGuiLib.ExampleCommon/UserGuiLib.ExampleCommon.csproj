@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CEC3947A-20EE-482A-90B9-09FCCEA3899E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UserGuiLib.ExampleCommon</RootNamespace>
+    <AssemblyName>UserGuiLib.ExampleCommon</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="TreeExample\BinaryTreeView.cs" />
+    <Compile Include="TreeExample\BSTTree.cs" />
+    <Compile Include="ColorWheel\ColorBox.cs" />
+    <Compile Include="ColorWheel\ColorPicker.cs" />
+    <Compile Include="ColorWheel\ColorPickerExample.cs" />
+    <Compile Include="ColorWheel\ColorScale.cs" />
+    <Compile Include="TreeExample\ITree.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ColorWheel\Slider.cs" />
+    <Compile Include="TreeExample\MessagePopup.cs" />
+    <Compile Include="TreeExample\TreeExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ObservableObjects\ObservableObjects.csproj">
+      <Project>{f2d44823-9600-423c-8b0a-6833ce6d27c8}</Project>
+      <Name>ObservableObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserGuiLib.Common\UserGuiLib.Common.csproj">
+      <Project>{e99b217b-31f3-4a91-9df1-8b47fdefb91a}</Project>
+      <Name>UserGuiLib.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserGuiLib.Components\UserGuiLib.Components.csproj">
+      <Project>{EE3AC5C2-005C-4CBD-8F8B-07BD0AD7BF67}</Project>
+      <Name>UserGuiLib.Components</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
