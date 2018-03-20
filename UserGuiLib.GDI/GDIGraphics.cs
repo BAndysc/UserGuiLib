@@ -17,10 +17,11 @@ namespace UserGuiLib.GDI
             {
                 graphics = value;
                 if (graphics != null)
-                    scalingFactor = 1;
+                    ScalingFactor = graphics.DpiX / DefaultDPI;
             }
         }
-        private float scalingFactor = 1.0f;
+
+        public float ScalingFactor { get; private set; } = 1.0f;
         private System.Drawing.Graphics graphics;
 
         private Dictionary<AnyFont, System.Drawing.Font> fonts = new Dictionary<AnyFont, System.Drawing.Font>();
@@ -37,8 +38,8 @@ namespace UserGuiLib.GDI
             var oldAntialias = Graphics.SmoothingMode;
 
             var pen = GetPen(penHandle);
-            center *= scalingFactor;
-            radius *= scalingFactor;
+            center *= ScalingFactor;
+            radius *= ScalingFactor;
 
             Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             Graphics.FillEllipse(pen.Brush, center.x - anchor.x * radius * 2, center.y - anchor.y * radius * 2, radius * 2, radius * 2);
@@ -50,8 +51,8 @@ namespace UserGuiLib.GDI
             var oldAntialias = Graphics.SmoothingMode;
 
             var pen = GetPen(penHandle);
-            center *= scalingFactor;
-            radius *= scalingFactor;
+            center *= ScalingFactor;
+            radius *= ScalingFactor;
 
             Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             Graphics.DrawEllipse(pen, center.x - anchor.x * radius * 2, center.y - anchor.y * radius * 2, radius * 2, radius * 2);
@@ -61,8 +62,8 @@ namespace UserGuiLib.GDI
         public void DrawLine(AnyPen pen, Vector2 p1, Vector2 p2)
         {
             var oldAntialias = Graphics.SmoothingMode;
-            p1 *= scalingFactor;
-            p2 *= scalingFactor;
+            p1 *= ScalingFactor;
+            p2 *= ScalingFactor;
             Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             Graphics.DrawLine(GetPen(pen), p1.x, p1.y, p2.x, p2.y);
             Graphics.SmoothingMode = oldAntialias;
@@ -70,8 +71,8 @@ namespace UserGuiLib.GDI
 
         public void DrawRectangle(AnyPen pen, Vector2 p1, Vector2 p2, float radius = 0)
         {
-            p1 *= scalingFactor;
-            p2 *= scalingFactor;
+            p1 *= ScalingFactor;
+            p2 *= ScalingFactor;
             if (radius == 0)
             {
                 float x = (int)Math.Ceiling(Math.Min(p1.x, p2.x));
@@ -108,18 +109,18 @@ namespace UserGuiLib.GDI
             float y = point.y - anchor.y * measure.y;
 
             if (maxWidth == 0)
-                Graphics.DrawString(text, GetFont(font), GetPen(pen).Brush, x * scalingFactor, y * scalingFactor);
+                Graphics.DrawString(text, GetFont(font), GetPen(pen).Brush, x * ScalingFactor, y * ScalingFactor);
             else
             {
-                var layout = new System.Drawing.RectangleF(x * scalingFactor, y * scalingFactor, maxWidth, 10000);
+                var layout = new System.Drawing.RectangleF(x * ScalingFactor, y * ScalingFactor, maxWidth*ScalingFactor, 10000);
                 Graphics.DrawString(text, GetFont(font), GetPen(pen).Brush, layout);
             }
         }
 
         public void FillRectangle(AnyPen pen, Vector2 p1, Vector2 p2, float radius = 0)
         {
-            p1 *= scalingFactor;
-            p2 *= scalingFactor;
+            p1 *= ScalingFactor;
+            p2 *= ScalingFactor;
             if (radius == 0)
             {
                 float x = Math.Min(p1.x, p2.x);
@@ -143,14 +144,14 @@ namespace UserGuiLib.GDI
 
         public Vector2 MeasureString(string text, AnyFont font, float maxWidth = 0)
         {
-            var size = Graphics.MeasureString(text, GetFont(font), (int)maxWidth);
-            return new Vector2(size.Width / scalingFactor, size.Height / scalingFactor);
+            var size = Graphics.MeasureString(text, GetFont(font), (int)(maxWidth * ScalingFactor));
+            return new Vector2(size.Width / ScalingFactor, size.Height / ScalingFactor);
         }
 
         public void DrawImage(AnyImage image, Vector2 point, Vector2 destSize, Vector2 anchor)
         {
-            destSize *= scalingFactor;
-            point *= scalingFactor;
+            destSize *= ScalingFactor;
+            point *= ScalingFactor;
             var x = (int)(point.x - destSize.x * anchor.x);
             var y = (int)(point.y - destSize.y * anchor.y);
             Graphics.DrawImageUnscaled(GetImage(image), x, y, (int)destSize.x, (int)destSize.y);
@@ -160,6 +161,7 @@ namespace UserGuiLib.GDI
 
         private System.Drawing.Pen GetPen(AnyPen handle)
         {
+            handle = new AnyPen(handle.a, handle.r, handle.g, handle.b, (int)(handle.Width * ScalingFactor));
             if (pens.ContainsKey(handle))
                 return pens[handle];
             else
@@ -225,7 +227,7 @@ namespace UserGuiLib.GDI
 
         public void Translate(Vector2 offset)
         {
-            graphics.TranslateTransform(offset.x, offset.y, System.Drawing.Drawing2D.MatrixOrder.Prepend);
+            graphics.TranslateTransform(offset.x* ScalingFactor, offset.y* ScalingFactor, System.Drawing.Drawing2D.MatrixOrder.Prepend);
         }
 
         public void Scale(Vector2 scale)

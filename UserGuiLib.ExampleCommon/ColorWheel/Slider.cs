@@ -21,20 +21,24 @@ namespace UserGuiLib.ExampleCommon.ColorWheel
             RegisterService<IMouseWheel>(this);
             RegisterService<IPixelShader>(this);
 
-            Value = new ObservableProperty<float>(0, (v) => v.Clamp(0, 1));
+            Value = new ObservableProperty<float>(0, v => v.Clamp(0, 1));
         }
 
         public void Render(IGraphics graphics)
         {
-            var p1 = new Vector2(Transform.Size.x/2, System.Math.Min(Value.get() * Transform.Size.y + 6, Transform.Size.y - 10));
+            var p1 = new Vector2(Transform.Size.x/2 - 5, System.Math.Min(Value.get() * Transform.Size.y, Transform.Size.y - 10));
 
             slider = new Rect(p1, new Vector2(Transform.Size.x, 10));
+            
+            if (over)
+                graphics.FillCircle(new AnyPen(120, 255, 255, 255, 1), p1, Vector2.Zero, 5);
 
-            graphics.DrawCircle(new AnyPen(255, 255, 255, 255, 1), p1, Vector2.Half, 5);
-            graphics.DrawCircle(new AnyPen(255, 0,0,0, 1), p1, Vector2.Half, 6);
+            graphics.DrawCircle(new AnyPen(255, 255, 255, 255, 1), p1, Vector2.Zero, 5);
+            graphics.DrawCircle(new AnyPen(255, 0,0,0, 1), p1 - Vector2.One, Vector2.Zero, 6);
         }
 
         private bool down = false;
+        private bool over = false;
 
         public void MouseDown(MouseButtons buttons, Vector2 cursor)
         {
@@ -52,6 +56,7 @@ namespace UserGuiLib.ExampleCommon.ColorWheel
         public void MouseUp(MouseButtons buttons, Vector2 cursor)
         {
             down = false;
+            over = slider.Contains(cursor);
         }
 
         public void MouseMove(MouseButtons buttons, Vector2 cursor)
@@ -61,6 +66,7 @@ namespace UserGuiLib.ExampleCommon.ColorWheel
                 var offset = cursor.y / Transform.Size.y;
                 Value.set(offset);
             }
+            over = slider.Contains(cursor);
         }
 
         public void MouseEnter()
@@ -69,6 +75,8 @@ namespace UserGuiLib.ExampleCommon.ColorWheel
 
         public void MouseExit()
         {
+            if (!down)
+                over = false;
         }
 
         public void MouseWheel(float delta)

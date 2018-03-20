@@ -7,3 +7,5 @@ UGLY is small wrapper for existing GUI libraries to make creating new components
 ![Tree view](https://i.imgur.com/JZxdLAQ.png)
 
 The important principle is speed - the library is designed for rather fast drawing (not for games though). Currently main supported backend is Microsoft GDI+. Special thanks to [Paint.net](https://www.getpaint.net/contact.html) team and their work on fast GDI rendering. 
+Another important thing is DPI awareness - times when we could create applications for standard 96 DPI has gone away. High resolution displays are popular and applications 
+have to be displayed correctly on any DPI.

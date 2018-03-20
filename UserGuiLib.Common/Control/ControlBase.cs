@@ -55,6 +55,8 @@ namespace UserGuiLib.Common.Control
 
         protected abstract float Height { get; }
 
+        protected virtual float Dpi => 1.0f;
+
         public bool DrawBounds;
 
         public ControlBase()
@@ -64,19 +66,20 @@ namespace UserGuiLib.Common.Control
         
         public Vector2 ScreenToWorld(Vector2 vector)
         {
-            return vector / Zoom + Offset;
+            return (vector / Dpi / Zoom + Offset);
         }
 
         public void WorldToScreen(Vector2 vector, out int x, out int y)
         {
-            var res = (vector - Offset) * Zoom;
+            var res = ((vector - Offset) * Zoom) * Dpi;
             x = (int)res.x;
             y = (int)res.y;
         }
 
         public void Render(IGraphics graphics)
         {
-            root.Transform.Size = new Vector2(Width, Height);
+            // divide by Dpi so that root is dpi unaware
+            root.Transform.Size = new Vector2(Width / Dpi, Height / Dpi);
             
             foreach (var child in root.Transform.Children)
             {

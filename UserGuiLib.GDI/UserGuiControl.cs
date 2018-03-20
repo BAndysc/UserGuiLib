@@ -14,11 +14,13 @@ namespace UserGuiLib.GDI
         private class InternalBase : ControlBase
         {
             private UserGuiControl Parent;
-            public Surface surface;
+            public FastBitmap surface;
 
             protected override float Width => Parent.Width;
 
             protected override float Height => Parent.Height;
+
+            protected override float Dpi => surface.Graphics.DpiX / GDIGraphics.DefaultDPI;
 
             public InternalBase(UserGuiControl parent)
             {
@@ -48,13 +50,13 @@ namespace UserGuiLib.GDI
                         var c = ColorBgra.FromInt32(res);
                         if (c.A == 255)
                         {
-                            surface.SetPointFast(x + startX, y + startY, c);
-                            surface.SetPointFast(x + startX + 1, y + startY, c);
+                            surface.Surface.SetPointFast(x + startX, y + startY, c);
+                            surface.Surface.SetPointFast(x + startX + 1, y + startY, c);
                         }
                         _x += step.x * 2;
                     }
-                    PaintDotNet.SystemLayer.Memory.Copy(surface.Scan0.Pointer + (y + 1 + startY) * surface.Stride + startX * 4,
-                        surface.Scan0.Pointer + (y + startY) * surface.Stride + startX * 4,
+                    PaintDotNet.SystemLayer.Memory.Copy(surface.Surface.Scan0.Pointer + (y + 1 + startY) * surface.Surface.Stride + startX * 4,
+                        surface.Surface.Scan0.Pointer + (y + startY) * surface.Surface.Stride + startX * 4,
                         (uint)(widthInPixels * 4));
                 });
             }
@@ -115,7 +117,7 @@ namespace UserGuiLib.GDI
             {
                 surface = new FastBitmap(Width, Height, ColorBgra.White);
                 graphics.Graphics = surface.Graphics;
-                baseControl.surface = surface.Surface;
+                baseControl.surface = surface;
             }
             else
                 surface = null;
