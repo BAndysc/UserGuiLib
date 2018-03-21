@@ -1,6 +1,4 @@
-﻿using QuadTrees;
-using QuadTrees.QTreeRect;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UserGuiLib.Common.Algebra;
 
 namespace UserGuiLib.Common.Component

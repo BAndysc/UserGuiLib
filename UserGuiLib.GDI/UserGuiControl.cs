@@ -65,8 +65,31 @@ namespace UserGuiLib.GDI
         private InternalBase baseControl;
         private FastBitmap surface;
         private GDIGraphics graphics;
-        
+
         // public
+
+        public bool Draggable
+        {
+            get
+            {
+                return baseControl.Draggable;
+            }
+            set
+            {
+                baseControl.Draggable = value;
+            }
+        }
+        public bool Zoomable
+        {
+            get
+            {
+                return baseControl.Zoomable;
+            }
+            set
+            {
+                baseControl.Zoomable = value;
+            }
+        }
 
         public UserGuiControl()
         {
@@ -106,6 +129,11 @@ namespace UserGuiLib.GDI
             baseControl.AddComponent(component);
         }
 
+        public void EnsureVisible(Vector2 position)
+        {
+            baseControl.EnsureVisible(position);
+        }
+
         // protected
 
         protected override void OnSizeChanged(EventArgs e)
@@ -130,6 +158,8 @@ namespace UserGuiLib.GDI
 
             graphics.Graphics.ResetTransform();
             surface.Clear();
+
+            graphics.Zoom = baseControl.Zoom;
 
             baseControl.Render(graphics);
 

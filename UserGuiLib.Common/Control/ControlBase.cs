@@ -217,7 +217,7 @@ namespace UserGuiLib.Common.Control
                 float oldzoom = Zoom;
                 ZoomVelocity *= 0.9f;
                 Zoom += ZoomVelocity * 0.01f * Zoom;
-                Zoom = Zoom.Clamp(0.1f, 500);
+                Zoom = Zoom.Clamp(0.01f, 500);
 
                 Vector2 oldimage = MouseStartZoomScreen / oldzoom;
                 Vector2 newimage = MouseStartZoomScreen / Zoom;
