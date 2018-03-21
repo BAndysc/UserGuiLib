@@ -63,6 +63,21 @@
 
     public struct AnyImage
     {
+        public string FilePath { get; }
 
+        public AnyImage(string filePath)
+        {
+            FilePath = filePath;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return FilePath.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return FilePath.GetHashCode();
+        }
     }
 }

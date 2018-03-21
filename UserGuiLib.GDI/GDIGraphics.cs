@@ -150,11 +150,14 @@ namespace UserGuiLib.GDI
 
         public void DrawImage(AnyImage image, Vector2 point, Vector2 destSize, Vector2 anchor)
         {
+            var oldAntialias = Graphics.SmoothingMode;
             destSize *= ScalingFactor;
             point *= ScalingFactor;
             var x = (int)(point.x - destSize.x * anchor.x);
             var y = (int)(point.y - destSize.y * anchor.y);
-            Graphics.DrawImageUnscaled(GetImage(image), x, y, (int)destSize.x, (int)destSize.y);
+            Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            Graphics.DrawImage(GetImage(image), x, y, (int)destSize.x, (int)destSize.y);
+            Graphics.SmoothingMode = oldAntialias;
         }
 
         // private
@@ -186,11 +189,17 @@ namespace UserGuiLib.GDI
                 return font;
             }
         }
-
+        
         private System.Drawing.Image GetImage(AnyImage handle)
         {
-            System.Diagnostics.Debug.Assert(images.ContainsKey(handle));
-            return images[handle];
+            if (images.ContainsKey(handle))
+                return images[handle];
+            else
+            {
+                var img = System.Drawing.Image.FromFile(handle.FilePath);
+                images[handle] = img;
+                return img;
+            }
         }
 
         private System.Drawing.Drawing2D.GraphicsPath RoundedRect(Vector2 p1, Vector2 p2, float radius)
