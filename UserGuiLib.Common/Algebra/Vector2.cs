@@ -71,5 +71,20 @@ namespace UserGuiLib.Common.Algebra
         {
             return new Vector2(a / b.x, a / b.y);
         }
+
+        public static Vector2 operator *(Vector2 a, Vector2 b)
+        {
+            return new Vector2(a.x * b.x, a.y * b.y);
+        }
+
+        public static Vector2 operator /(Vector2 a, Vector2 b)
+        {
+            return new Vector2(a.x / b.x, a.y / b.y);
+        }
+
+        public override string ToString()
+        {
+            return $"({x}, {y})";
+        }
     }
 }

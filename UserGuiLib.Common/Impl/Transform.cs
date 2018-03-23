@@ -8,6 +8,7 @@ namespace UserGuiLib.Common.Impl
     {
         public Transform(IComponent owner, ITransform parent)
         {
+            Scale = Vector2.One;
             Object = owner;
             Parent = parent;
         }
@@ -17,6 +18,28 @@ namespace UserGuiLib.Common.Impl
 
         public Vector2 Location { get; set; }
         public Vector2 Size { get; set; }
+        public Vector2 Anchor { get; set; }
+        public Vector2 Pivot { get; set; }
+        public Vector2 Scale { get; set; }
+
+        public Vector2 TopLeftPoint
+        {
+            get
+            {
+                if (Parent == null)
+                    return Location - Size * Pivot * Scale;
+                return Location - Size * Pivot * Scale + Parent.Size * Anchor;
+            }
+        }
+
+        public Vector2 BottomRightPoint
+        {
+            get
+            {
+                return Location - Size * Pivot*Scale + Parent.Size * Anchor+Size*Scale;
+            }
+        }
+
         public Rect Bounds { get; set; }
 
         public IComponent Object { get; private set; }
@@ -26,8 +49,8 @@ namespace UserGuiLib.Common.Impl
             get
             {
                 if (Parent == null)
-                    return Location;
-                return Location + Parent.Location;
+                    return TopLeftPoint;
+                return TopLeftPoint + Parent.TopLeftPoint;
             }
         }
 
@@ -49,17 +72,17 @@ namespace UserGuiLib.Common.Impl
                 if (!(child.Transform.WorldLocation.x >= p2.x ||
                     child.Transform.WorldLocation.y >= p2.y ||
                     child.Transform.WorldLocation.x + child.Transform.Size.x < p1.x ||
-                    child.Transform.WorldLocation.x + child.Transform.Size.y < p1.y))
+                    child.Transform.WorldLocation.y + child.Transform.Size.y < p1.y))
                 yield return child;
         }
 
         public IEnumerable<IComponent> ChildrenInRegionRelative(Vector2 p1, Vector2 p2)
         {
             foreach (var child in children)
-                if (!(child.Transform.Location.x >= p2.x ||
-                    child.Transform.Location.y >= p2.y ||
-                    child.Transform.Location.x + child.Transform.Size.x < p1.x ||
-                    child.Transform.Location.x + child.Transform.Size.y < p1.y))
+                if (!(child.Transform.TopLeftPoint.x >= p2.x ||
+                    child.Transform.TopLeftPoint.y >= p2.y ||
+                    child.Transform.BottomRightPoint.x < p1.x ||
+                    child.Transform.BottomRightPoint.y < p1.y))
                     yield return child;
         }
 

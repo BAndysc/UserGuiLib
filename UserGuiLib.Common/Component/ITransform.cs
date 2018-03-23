@@ -7,8 +7,13 @@ namespace UserGuiLib.Common.Component
     {
         ITransform Parent { get; set; }
         
+        Vector2 TopLeftPoint { get; }
+        Vector2 BottomRightPoint { get; }
         Vector2 Location { get; set; }
         Vector2 Size { get; set; }
+        Vector2 Anchor { get; set; }
+        Vector2 Pivot { get; set; }
+        Vector2 Scale { get; set; }
         Rect Bounds { get; set; }
 
         Vector2 WorldLocation { get; }

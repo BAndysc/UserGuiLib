@@ -102,6 +102,9 @@ namespace UserGuiLib.Common.Control
             foreach (var child in parent.Transform.ChildrenInRegion(p1, p2))
             {
                 graphics.Translate(child.Transform.Location);
+                graphics.Translate(child.Transform.Parent.Size * child.Transform.Anchor);
+                graphics.Scale(child.Transform.Scale);
+                graphics.Translate(child.Transform.Size * child.Transform.Pivot * -1.0f);
 
                 var pixel = child.GetService<IPixelShader>();
                 if (pixel != null)
@@ -137,7 +140,11 @@ namespace UserGuiLib.Common.Control
                 if (DrawBounds)
                    graphics.DrawRectangle(new AnyPen(255, 0, 0, 255, 1), Vector2.Zero, child.Transform.Size);
 
-                graphics.Translate(child.Transform.Location * -1);
+                graphics.Translate(child.Transform.Size * child.Transform.Pivot);
+                graphics.Scale(1.0f/child.Transform.Scale);
+                graphics.Translate(child.Transform.Parent.Size * child.Transform.Anchor * -1.0f);
+                graphics.Translate(child.Transform.Location * -1.0f);
+
             }
         }
 

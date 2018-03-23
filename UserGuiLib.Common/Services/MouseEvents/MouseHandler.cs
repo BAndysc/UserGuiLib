@@ -22,6 +22,7 @@ namespace UserGuiLib.Common.Services.MouseEvents
 
         public bool IsLeftDown { get; private set; }
         public bool IsOver { get; private set; }
+        public Vector2 Position { get; private set; }
 
         private bool blocked;
 
@@ -41,6 +42,7 @@ namespace UserGuiLib.Common.Services.MouseEvents
 
         public void MouseMove(MouseButtons buttons, Vector2 mouse)
         {
+            Position = mouse;
             var raycast = RayCast(mouse);
 
             if (raycast != null)
@@ -55,7 +57,7 @@ namespace UserGuiLib.Common.Services.MouseEvents
 
                 if (mouseEvents != null)
                 {
-                    mouseEvents.MouseMove(buttons, mouse - raycast.Location);
+                    mouseEvents.MouseMove(buttons, (mouse - raycast.TopLeftPoint)/raycast.Scale);
                     if (currentOver != mouseEvents)
                         mouseEvents.MouseEnter();
                     currentOver = mouseEvents;

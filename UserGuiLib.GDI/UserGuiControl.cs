@@ -168,23 +168,27 @@ namespace UserGuiLib.GDI
         {
             baseControl.MouseMoved(new Vector2(e.X, e.Y));
             baseControl.OnMouseDown(ToMouseButtons(e.Button));
+            base.OnMouseDown(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
             baseControl.MouseMoved(new Vector2(e.X, e.Y));
             baseControl.OnMouseUp(ToMouseButtons(e.Button));
+            base.OnMouseUp(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
             baseControl.MouseMoved(new Vector2(e.X, e.Y));
             baseControl.OnMouseMove(ToMouseButtons(e.Button));
+            base.OnMouseMove(e);
         }
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             baseControl.OnMouseWheel(e.Delta);
+            base.OnMouseWheel(e);
         }
 
         // private
