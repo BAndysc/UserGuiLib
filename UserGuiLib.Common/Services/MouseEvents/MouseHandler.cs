@@ -33,7 +33,7 @@ namespace UserGuiLib.Common.Services.MouseEvents
             if (down != null)
                 return down;
 
-            var list = Owner.Transform.ChildrenInRegion(mouse, mouse+Vector2.Zero);
+            var list = Owner.Transform.ChildrenInRegionRelative(mouse, mouse + Vector2.Half);
             foreach (var el in list)
                 return el.Transform;
             return null;
@@ -117,13 +117,14 @@ namespace UserGuiLib.Common.Services.MouseEvents
 
         public void MouseUp(MouseButtons buttons, Vector2 cursor)
         {
-            var raycast = RayCast(cursor);
+            var raycast = down != null ? down : RayCast(cursor);
 
             if (raycast != null)
             {
                 var service = raycast.Object.GetService<IMouseEvents>();
                 if (service != null)
                     service.MouseUp(buttons, cursor - raycast.Location);
+                down = null;
             }
             else
             {
@@ -131,7 +132,6 @@ namespace UserGuiLib.Common.Services.MouseEvents
                 if (buttons.HasFlag(MouseButtons.Left))
                     IsLeftDown = false;
             }
-            down = null;
         }
 
         public void MouseWheel(float delta)

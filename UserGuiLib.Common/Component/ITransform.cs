@@ -21,5 +21,6 @@ namespace UserGuiLib.Common.Component
         IEnumerable<IComponent> Children { get; }
 
         IEnumerable<IComponent> ChildrenInRegion(Vector2 p1, Vector2 p2);
+        IEnumerable<IComponent> ChildrenInRegionRelative(Vector2 p1, Vector2 p2);
     }
 }

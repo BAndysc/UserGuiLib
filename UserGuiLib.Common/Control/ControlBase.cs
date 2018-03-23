@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using UserGuiLib.Common.Algebra;
 using UserGuiLib.Common.Component;
@@ -96,8 +96,8 @@ namespace UserGuiLib.Common.Control
 
         private void RecursiveDrawChildren(IGraphics graphics, IComponent parent)
         {
-            var p1 = parent.Transform.Location * -1;
-            var p2 = p1 + ScreenToWorld(new Vector2(Width, Height));
+            var p1 = Offset;
+            var p2 = ScreenToWorld(new Vector2(Width, Height));
 
             foreach (var child in parent.Transform.ChildrenInRegion(p1, p2))
             {
