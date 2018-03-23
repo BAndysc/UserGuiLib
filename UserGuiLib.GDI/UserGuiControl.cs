@@ -128,12 +128,7 @@ namespace UserGuiLib.GDI
         {
             baseControl.AddComponent(component);
         }
-
-        public void EnsureVisible(Vector2 position)
-        {
-            baseControl.EnsureVisible(position);
-        }
-
+        
         // protected
 
         protected override void OnSizeChanged(EventArgs e)
@@ -158,9 +153,7 @@ namespace UserGuiLib.GDI
 
             graphics.Graphics.ResetTransform();
             surface.Clear();
-
-            graphics.Zoom = baseControl.Zoom;
-
+            
             baseControl.Render(graphics);
 
             surface.Flip(e.Graphics, e.ClipRectangle);
