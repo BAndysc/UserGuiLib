@@ -72,7 +72,12 @@
 
         public override bool Equals(object obj)
         {
-            return FilePath.Equals(obj);
+            if (!(obj is AnyImage))
+                return false;
+
+            var other = (obj as AnyImage?).Value;
+
+            return FilePath.Equals(other.FilePath);
         }
 
         public override int GetHashCode()
