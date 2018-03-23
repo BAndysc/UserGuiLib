@@ -66,5 +66,10 @@ namespace UserGuiLib.Common.Algebra
         {
             return new Vector2(a.x / b, a.y / b);
         }
+
+        public static Vector2 operator /(float a, Vector2 b)
+        {
+            return new Vector2(a / b.x, a / b.y);
+        }
     }
 }
