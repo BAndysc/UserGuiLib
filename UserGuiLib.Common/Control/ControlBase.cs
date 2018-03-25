@@ -109,8 +109,8 @@ namespace UserGuiLib.Common.Control
                 var pixel = child.GetService<IPixelShader>();
                 if (pixel != null)
                 {
-                    WorldToScreen(child.Transform.WorldLocation, out int startX, out int startY);
-                    WorldToScreen(child.Transform.WorldLocation + child.Transform.Size, out int endX, out int endY);
+                    WorldToScreen(child.Transform.WorldTopLeftPoint, out int startX, out int startY);
+                    WorldToScreen(child.Transform.WorldTopLeftPoint + child.Transform.Size, out int endX, out int endY);
                     startX = startX.Clamp(0, (int)Width);
                     startY = startY.Clamp(0, (int)Height);
                     endX = endX.Clamp(0, (int)Width);
@@ -124,7 +124,7 @@ namespace UserGuiLib.Common.Control
                         var world2 = ScreenToWorld(new Vector2(startX + 1, startY + 1));
 
                         var step = world2 - world;
-                        var start = world - child.Transform.WorldLocation;
+                        var start = world - child.Transform.WorldTopLeftPoint;
 
                         ProcessPixelFragment(startX, startY, endX, endY, step, start, pixel.PixelShader);
                     }

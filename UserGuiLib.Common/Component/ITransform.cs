@@ -16,7 +16,8 @@ namespace UserGuiLib.Common.Component
         Vector2 Scale { get; set; }
         Rect Bounds { get; set; }
 
-        Vector2 WorldLocation { get; }
+        Vector2 WorldTopLeftPoint { get; }
+        Vector2 WorldBottomRightPoint { get; }
 
         IComponent Object { get; }
 
@@ -27,5 +28,8 @@ namespace UserGuiLib.Common.Component
 
         IEnumerable<IComponent> ChildrenInRegion(Vector2 p1, Vector2 p2);
         IEnumerable<IComponent> ChildrenInRegionRelative(Vector2 p1, Vector2 p2);
+
+        Vector2 PointToParent(Vector2 point);
+        Vector2 PointToWorld(Vector2 point);
     }
 }

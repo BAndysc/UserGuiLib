@@ -36,6 +36,8 @@ namespace UserGuiLib.Common.Impl
         {
             get
             {
+                if (Parent == null)
+                    return Location - Size * Pivot * Scale + Size * Scale;
                 return Location - Size * Pivot*Scale + Parent.Size * Anchor+Size*Scale;
             }
         }
@@ -44,13 +46,22 @@ namespace UserGuiLib.Common.Impl
 
         public IComponent Object { get; private set; }
 
-        public Vector2 WorldLocation
+        public Vector2 WorldTopLeftPoint
         {
             get
             {
                 if (Parent == null)
                     return TopLeftPoint;
-                return TopLeftPoint + Parent.TopLeftPoint;
+                return PointToWorld(Vector2.Zero);
+            }
+        }
+        public Vector2 WorldBottomRightPoint
+        {
+            get
+            {
+                if (Parent == null)
+                    return BottomRightPoint;
+                return PointToWorld(Size);
             }
         }
 
@@ -69,11 +80,11 @@ namespace UserGuiLib.Common.Impl
         public IEnumerable<IComponent> ChildrenInRegion(Vector2 p1, Vector2 p2)
         {
             foreach (var child in children)
-                if (!(child.Transform.WorldLocation.x >= p2.x ||
-                    child.Transform.WorldLocation.y >= p2.y ||
-                    child.Transform.WorldLocation.x + child.Transform.Size.x < p1.x ||
-                    child.Transform.WorldLocation.y + child.Transform.Size.y < p1.y))
-                yield return child;
+                if (!(child.Transform.WorldTopLeftPoint.x >= p2.x ||
+                    child.Transform.WorldTopLeftPoint.y >= p2.y ||
+                    child.Transform.WorldBottomRightPoint.x < p1.x ||
+                    child.Transform.WorldBottomRightPoint.y < p1.y))
+                    yield return child;
         }
 
         public IEnumerable<IComponent> ChildrenInRegionRelative(Vector2 p1, Vector2 p2)
@@ -84,6 +95,17 @@ namespace UserGuiLib.Common.Impl
                     child.Transform.BottomRightPoint.x < p1.x ||
                     child.Transform.BottomRightPoint.y < p1.y))
                     yield return child;
+        }
+
+        public Vector2 PointToParent(Vector2 point)
+        {
+            return point * Scale + TopLeftPoint;
+        }
+        public Vector2 PointToWorld(Vector2 point)
+        {
+            if (Parent == null)
+                return point;
+            return Parent.PointToWorld(PointToParent(point));
         }
 
         public IEnumerable<IComponent> Children

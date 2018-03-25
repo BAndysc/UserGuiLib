@@ -83,7 +83,7 @@ namespace UserGuiLib.GDI
                 var p = GetPen(pen);
 
                 if (w > 0.001f && h > 0.00f)
-                    Graphics.DrawRectangle(p, x, y, w - p.Width, h - p.Width);
+                    Graphics.DrawRectangle(p, x, y, w, h);
             }
             else
             {
@@ -131,7 +131,7 @@ namespace UserGuiLib.GDI
                 var p = GetPen(pen);
 
                 if (w > 0.001f && h > 0.00f)
-                    Graphics.FillRectangle(p.Brush, x, y, w - p.Width, h - p.Width);
+                    Graphics.FillRectangle(p.Brush, x, y, w, h);
             }
             else
             {

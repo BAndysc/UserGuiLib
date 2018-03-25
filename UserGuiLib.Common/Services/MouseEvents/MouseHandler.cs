@@ -105,7 +105,7 @@ namespace UserGuiLib.Common.Services.MouseEvents
                 down = raycast;
                 var service = raycast.Object.GetService<IMouseEvents>();
                 if (service != null)
-                    service.MouseDown(buttons, cursor - raycast.Location);
+                    service.MouseDown(buttons, (cursor - raycast.TopLeftPoint) / raycast.Scale);
             }
             else
             {
@@ -125,7 +125,7 @@ namespace UserGuiLib.Common.Services.MouseEvents
             {
                 var service = raycast.Object.GetService<IMouseEvents>();
                 if (service != null)
-                    service.MouseUp(buttons, cursor - raycast.Location);
+                    service.MouseUp(buttons, (cursor - raycast.TopLeftPoint) / raycast.Scale);
                 down = null;
             }
             else
@@ -143,7 +143,11 @@ namespace UserGuiLib.Common.Services.MouseEvents
                 var wheel = current.Object.GetService<IMouseWheel>();
                 if (wheel != null)
                     wheel.MouseWheel(delta);
+                else
+                    OnMouseWheel(delta);
             }
+            else
+                OnMouseWheel(delta);
         }
 
         public void Block(bool block)

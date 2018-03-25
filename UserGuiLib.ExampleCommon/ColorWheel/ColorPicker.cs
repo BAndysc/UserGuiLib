@@ -18,8 +18,12 @@ namespace UserGuiLib.ExampleCommon.ColorWheel
         private Slider hueSlider;
         private ColorBox colorBox;
 
+        PassDownChildrenLayout layout = new PassDownChildrenLayout();
+
         public ColorPicker()
         {
+            layout.Owner = this;
+
             var mouseHandler = new MouseHandler();
             RegisterService<ILayout>(this);
             RegisterService<IMouseEvents>(mouseHandler);
@@ -40,6 +44,8 @@ namespace UserGuiLib.ExampleCommon.ColorWheel
 
         public void Relayout(IGraphics g)
         {
+            layout.Relayout(g);
+
             hueSlider.Transform.Size = new Vector2(30, Transform.Size.y);
 
             colorBox.Transform.Location = new Vector2(hueSlider.Transform.Size.x, 0);

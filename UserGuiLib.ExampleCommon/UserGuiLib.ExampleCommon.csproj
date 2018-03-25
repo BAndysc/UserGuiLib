@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorWheel\SliderHandle.cs" />
     <Compile Include="TreeExample\BinaryTreeView.cs" />
     <Compile Include="TreeExample\BSTTree.cs" />
     <Compile Include="ColorWheel\ColorBox.cs" />
