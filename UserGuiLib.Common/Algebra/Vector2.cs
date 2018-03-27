@@ -82,6 +82,15 @@ namespace UserGuiLib.Common.Algebra
             return new Vector2(a.x / b.x, a.y / b.y);
         }
 
+        public static bool operator ==(Vector2 a, Vector2 b)
+        {
+            return a.x==b.x && a.y==b.y;
+        }
+        public static bool operator !=(Vector2 a, Vector2 b)
+        {
+            return !(a==b);
+        }
+
         public override string ToString()
         {
             return $"({x}, {y})";

@@ -8,7 +8,7 @@ using UserGuiLib.Components;
 
 namespace UserGuiLib.ExampleCommon.TreeExample
 {
-    public class MessagePopup : Component, IRenderer, ILayout
+    public class MessagePopup : Component, IRenderer
     {
         private Label label;
         
@@ -23,39 +23,37 @@ namespace UserGuiLib.ExampleCommon.TreeExample
         public MessagePopup(string text, float time)
         {
             RegisterService<IRenderer>(this);
-            RegisterService<ILayout>(this);
 
-            label = new Label();
-            label.Text = text;
+            label = new Label
+            {
+                Text = text,
+            };
+            label.Transform.Pivot = Vector2.Half;
+            label.Transform.Anchor = new Anchor(Vector2.Half, Vector2.Half);
+            label.Transform.Size = new Vector2(200, 150);
 
             sw.Start();
+
+            Transform.Anchor = new Anchor(Vector2.Zero, Vector2.One);
 
             Transform.AddChild(label);
             this.time = time;
         }
 
-        public void Relayout(IGraphics g)
+        public void Render(IGraphics graphics)
         {
-            Transform.Size = Transform.Parent.Size;
-
-            label.GetService<ILayout>().Relayout(g);
-
-            label.Transform.Location = Transform.Size / 2 - label.Transform.Size;
-
             if (sw.ElapsedMilliseconds > time * 1000)
             {
                 TimePassed();
                 sw.Stop();
                 sw.Reset();
             }
-        }
 
-        public void Render(IGraphics graphics)
-        {
+            label.GetService<ILayout>().Relayout(graphics);
+
             graphics.FillRectangle(new AnyPen(200, 0, 0, 0, 1), Vector2.Zero, Transform.Size);
-
-
-            graphics.FillRectangle(new AnyPen(255, 255, 255, 255, 1), label.Transform.Location - margin, label.Transform.Location + label.Transform.Size + margin);
+            
+            graphics.FillRectangle(new AnyPen(255, 255, 255, 255, 1), label.Transform.TopLeftPoint - margin, label.Transform.BottomRightPoint + margin);
         }
     }
 }

@@ -17,8 +17,24 @@ namespace UserGuiLib.Common.Impl
         private List<IComponent> children = new List<IComponent>();
 
         public Vector2 Location { get; set; }
-        public Vector2 Size { get; set; }
-        public Vector2 Anchor { get; set; }
+        private Vector2 _size;
+        public Vector2 Size
+        {
+            get
+            {
+                if (Anchor.Min == Anchor.Max)
+                {
+                    return _size;
+                }
+                return (Anchor.Max-Anchor.Min)*Parent.Size;
+            }
+
+            set
+            {
+                _size = value;
+            }
+        }
+        public Anchor Anchor { get; set; }
         public Vector2 Pivot { get; set; }
         public Vector2 Scale { get; set; }
 
@@ -28,7 +44,8 @@ namespace UserGuiLib.Common.Impl
             {
                 if (Parent == null)
                     return Location - Size * Pivot * Scale;
-                return Location - Size * Pivot * Scale + Parent.Size * Anchor;
+
+                return Location - Size * Pivot * Scale + Parent.Size * Anchor.Min;
             }
         }
 
@@ -38,7 +55,7 @@ namespace UserGuiLib.Common.Impl
             {
                 if (Parent == null)
                     return Location - Size * Pivot * Scale + Size * Scale;
-                return Location - Size * Pivot*Scale + Parent.Size * Anchor+Size*Scale;
+                return Location - Size * Pivot*Scale + Parent.Size * Anchor.Max+Size*Scale;
             }
         }
 
@@ -65,6 +82,8 @@ namespace UserGuiLib.Common.Impl
             }
         }
 
+        private HashSet<IComponent> componentsToRemove = new HashSet<IComponent>();
+
         public void AddChild(IComponent component)
         {
             component.Transform.Parent = this;
@@ -73,8 +92,17 @@ namespace UserGuiLib.Common.Impl
 
         public void RemoveChild(IComponent component)
         {
-            component.Transform.Parent = null;
-            children.Remove(component);
+            componentsToRemove.Add(component);
+        }
+
+        private void RemovePendingComponents()
+        {
+            foreach (var component in componentsToRemove)
+            {
+                children.Remove(component);
+                component.Transform.Parent = null;
+            }
+            componentsToRemove.Clear();
         }
 
         public IEnumerable<IComponent> ChildrenInRegion(Vector2 p1, Vector2 p2)
@@ -85,6 +113,7 @@ namespace UserGuiLib.Common.Impl
                     child.Transform.WorldBottomRightPoint.x < p1.x ||
                     child.Transform.WorldBottomRightPoint.y < p1.y))
                     yield return child;
+            RemovePendingComponents();
         }
 
         public IEnumerable<IComponent> ChildrenInRegionRelative(Vector2 p1, Vector2 p2)
@@ -95,17 +124,7 @@ namespace UserGuiLib.Common.Impl
                     child.Transform.BottomRightPoint.x < p1.x ||
                     child.Transform.BottomRightPoint.y < p1.y))
                     yield return child;
-        }
-
-        public Vector2 PointToParent(Vector2 point)
-        {
-            return point * Scale + TopLeftPoint;
-        }
-        public Vector2 PointToWorld(Vector2 point)
-        {
-            if (Parent == null)
-                return point;
-            return Parent.PointToWorld(PointToParent(point));
+            RemovePendingComponents();
         }
 
         public IEnumerable<IComponent> Children
@@ -114,7 +133,20 @@ namespace UserGuiLib.Common.Impl
             {
                 foreach (var child in children)
                     yield return child;
+                RemovePendingComponents();
             }
+        }
+
+        public Vector2 PointToParent(Vector2 point)
+        {
+            return point * Scale + TopLeftPoint;
+        }
+
+        public Vector2 PointToWorld(Vector2 point)
+        {
+            if (Parent == null)
+                return point;
+            return Parent.PointToWorld(PointToParent(point));
         }
     }
 }

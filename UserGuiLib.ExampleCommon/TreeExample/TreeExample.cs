@@ -46,7 +46,6 @@ namespace UserGuiLib.ExampleCommon.TreeExample
                     Transform.RemoveChild(popup);
                     mouse.Block(false);
                     popup = null;
-
                 };
                 Transform.AddChild(popup);
             };
@@ -66,9 +65,6 @@ namespace UserGuiLib.ExampleCommon.TreeExample
             label.Transform.Location = new Common.Algebra.Vector2(Transform.Size.x - label.Transform.Size.x, 0);
 
             binaryTreeView.GetService<ILayout>().Relayout(g);
-
-            if (popup != null)
-                popup.GetService<ILayout>().Relayout(g);
         }
     }
 }

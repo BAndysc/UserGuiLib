@@ -3,6 +3,27 @@ using UserGuiLib.Common.Algebra;
 
 namespace UserGuiLib.Common.Component
 {
+    public struct Anchor
+    {
+        public Vector2 Min { get; private set; }
+        public Vector2 Max { get; private set; }
+        
+        public bool SamePoint { get; private set; }
+
+        public Anchor(Vector2 min, Vector2 max)
+        {
+            Min = min;
+            Max = max;
+            SamePoint = false;
+        }
+
+        public Anchor(Vector2 anchor)
+        {
+            Min = anchor;
+            Max = anchor;
+            SamePoint = true;
+        }
+    }
     public interface ITransform
     {
         ITransform Parent { get; set; }
@@ -11,7 +32,7 @@ namespace UserGuiLib.Common.Component
         Vector2 BottomRightPoint { get; }
         Vector2 Location { get; set; }
         Vector2 Size { get; set; }
-        Vector2 Anchor { get; set; }
+        Anchor Anchor { get; set; }
         Vector2 Pivot { get; set; }
         Vector2 Scale { get; set; }
         Rect Bounds { get; set; }

@@ -20,7 +20,7 @@ namespace UserGuiLib.ExampleCommon.ColorWheel
 
             Transform.Size = Vector2.One * 10;
             Transform.Pivot = Vector2.Half;
-            Transform.Anchor = new Vector2(0.5f, 0);
+            Transform.Anchor = new Common.Component.Anchor(new Vector2(0.5f, 0), new Vector2(0.5f, 0));
             this.value = value;
         }
 

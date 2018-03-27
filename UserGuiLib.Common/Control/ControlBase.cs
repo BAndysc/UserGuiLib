@@ -102,7 +102,7 @@ namespace UserGuiLib.Common.Control
             foreach (var child in parent.Transform.ChildrenInRegion(p1, p2))
             {
                 graphics.Translate(child.Transform.Location);
-                graphics.Translate(child.Transform.Parent.Size * child.Transform.Anchor);
+                graphics.Translate(child.Transform.Parent.Size * child.Transform.Anchor.Min);
                 graphics.Scale(child.Transform.Scale);
                 graphics.Translate(child.Transform.Size * child.Transform.Pivot * -1.0f);
 
@@ -142,7 +142,7 @@ namespace UserGuiLib.Common.Control
 
                 graphics.Translate(child.Transform.Size * child.Transform.Pivot);
                 graphics.Scale(1.0f/child.Transform.Scale);
-                graphics.Translate(child.Transform.Parent.Size * child.Transform.Anchor * -1.0f);
+                graphics.Translate(child.Transform.Parent.Size * child.Transform.Anchor.Min * -1.0f);
                 graphics.Translate(child.Transform.Location * -1.0f);
 
             }
@@ -238,6 +238,20 @@ namespace UserGuiLib.Common.Control
 
                 Offset -= OffsetDirection * OffsetVelocity * 5 / Zoom;
             }
+        }
+
+        public IComponent AtPoint(Vector2 point)
+        {
+            return AtPointRecursive(ScreenToWorld(point), root);
+        }
+
+        private IComponent AtPointRecursive(Vector2 point, IComponent parent)
+        {
+            var children = parent.Transform.ChildrenInRegion(point, point + Vector2.Half);
+            foreach (var child in children)
+                return AtPointRecursive(point, child);
+
+            return parent;
         }
 
         public void AddComponent(IComponent component)
