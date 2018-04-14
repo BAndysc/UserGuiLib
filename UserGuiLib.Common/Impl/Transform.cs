@@ -13,6 +13,8 @@ namespace UserGuiLib.Common.Impl
             Parent = parent;
         }
 
+        public bool SizeScaleless { get; set; }
+
         public ITransform Parent { get; set; }
         private List<IComponent> children = new List<IComponent>();
 
@@ -24,9 +26,12 @@ namespace UserGuiLib.Common.Impl
             {
                 if (Anchor.Min == Anchor.Max)
                 {
-                    return _size;
+                    if (SizeScaleless && Parent != null)
+                        return _size / Parent.Scale;
+                    else
+                        return _size;
                 }
-                return (Anchor.Max-Anchor.Min)*Parent.Size;
+                return (Anchor.Max - Anchor.Min) * Parent.Size;
             }
 
             set

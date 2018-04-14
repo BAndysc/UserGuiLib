@@ -10,7 +10,7 @@ namespace UserGuiLib.Common.Impl
     {
         public ITransform Transform { get; private set; }
         public IComponent Owner { get; set; }
-
+        
         public Component()
         {
             Transform = new Transform(this, null);

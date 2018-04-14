@@ -36,6 +36,7 @@ namespace UserGuiLib.Common.Component
         Vector2 Pivot { get; set; }
         Vector2 Scale { get; set; }
         Rect Bounds { get; set; }
+        bool SizeScaleless { get; set; }
 
         Vector2 WorldTopLeftPoint { get; }
         Vector2 WorldBottomRightPoint { get; }
