@@ -16,6 +16,8 @@ namespace UserGuiLib.Common.Drawing
 
         void DrawCircle(AnyPen pen, Vector2 center, Vector2 anchor, float radius);
 
+        void FillSquare(AnyPen pen, Vector2 center, Vector2 anchor, float length);
+
         void DrawSquare(AnyPen pen, Vector2 center, Vector2 anchor, float length);
 
         void DrawImage(AnyImage image, Vector2 point, Vector2 destSize, Vector2 anchor);

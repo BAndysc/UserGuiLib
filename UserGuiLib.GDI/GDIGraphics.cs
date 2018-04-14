@@ -101,6 +101,13 @@ namespace UserGuiLib.GDI
             DrawRectangle(pen, p1, p2, 0);
         }
 
+        public void FillSquare(AnyPen pen, Vector2 center, Vector2 anchor, float length)
+        {
+            var p1 = center - anchor * length;
+            var p2 = p1 + new Vector2(length, length);
+            FillRectangle(pen, p1, p2, 0);
+        }
+
         public void DrawString(string text, AnyPen pen, AnyFont font, Vector2 point, Vector2 anchor, float maxWidth = 0)
         {
             Vector2 measure = MeasureString(text, font, maxWidth);
