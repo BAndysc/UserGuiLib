@@ -119,7 +119,7 @@ namespace UserGuiLib.Common.Services.MouseEvents
 
         public void MouseUp(MouseButtons buttons, Vector2 cursor)
         {
-            var raycast = down != null ? down : RayCast(cursor);
+            var raycast = down;
 
             if (raycast != null)
             {
