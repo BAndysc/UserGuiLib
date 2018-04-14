@@ -91,6 +91,16 @@ namespace UserGuiLib.Common.Algebra
             return !(a==b);
         }
 
+        public static Vector2 Min(Vector2 a, Vector2 b)
+        {
+            return new Vector2(Math.Min(a.x, b.x), Math.Min(a.y, b.y));
+        }
+
+        public static Vector2 Max(Vector2 a, Vector2 b)
+        {
+            return new Vector2(Math.Max(a.x, b.x), Math.Max(a.y, b.y));
+        }
+
         public override string ToString()
         {
             return $"({x}, {y})";
