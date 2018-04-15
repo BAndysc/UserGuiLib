@@ -137,9 +137,13 @@ namespace UserGuiLib.Common.Control
                 if (child.Transform.Children.Any())
                     RecursiveDrawChildren(graphics, child);
 
+                var rendererAfterChildren = child.GetService<IAfterChildrenRenderer>();
+                if (rendererAfterChildren != null)
+                    rendererAfterChildren.Render(graphics);
+
                 if (DrawBounds)
                    graphics.DrawRectangle(new AnyPen(255, 0, 0, 255, 1), Vector2.Zero, child.Transform.Size);
-
+                
                 graphics.Translate(child.Transform.Size * child.Transform.Pivot);
                 graphics.Scale(1.0f/child.Transform.Scale);
                 graphics.Translate(child.Transform.Parent.Size * child.Transform.Anchor.Min * -1.0f);

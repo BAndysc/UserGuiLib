@@ -6,4 +6,9 @@ namespace UserGuiLib.Common.Services.Render
     {
         void Render(IGraphics graphics);
     }
+    
+    public interface IAfterChildrenRenderer : IService
+    {
+        void Render(IGraphics graphics);
+    }
 }
