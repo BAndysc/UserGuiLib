@@ -139,7 +139,7 @@ namespace UserGuiLib.Common.Control
 
                 var rendererAfterChildren = child.GetService<IAfterChildrenRenderer>();
                 if (rendererAfterChildren != null)
-                    rendererAfterChildren.Render(graphics);
+                    rendererAfterChildren.RenderAfter(graphics);
 
                 if (DrawBounds)
                    graphics.DrawRectangle(new AnyPen(255, 0, 0, 255, 1), Vector2.Zero, child.Transform.Size);
